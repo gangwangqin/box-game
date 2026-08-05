@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>第七号盒子 第一章</title>
+<style>
+body{margin:0;background:#050505;color:#ddd;font-family:Arial,"Microsoft YaHei"}
+.game{max-width:520px;margin:auto;padding:15px}
+h1{text-align:center;color:#d4a74c}
+.room{background:#121212;border:1px solid #444;border-radius:15px;padding:15px}
+.scene{background:#1b1b1b;padding:15px;border-radius:10px;line-height:1.8}
+.object,button{background:#252525;color:white;padding:15px;margin-top:12px;border-radius:12px;text-align:center;border:0;width:100%;font-size:18px}
+.object:active{background:#555}
+#device{text-align:center;font-size:80px;margin:20px;transition:1s}
+.spin{transform:rotate(720deg)}
+input{width:100%;box-sizing:border-box;padding:12px;background:#222;color:white;font-size:20px}
+.bag{margin-top:20px;background:#080808;padding:15px;color:#d4a74c;border-radius:10px}
+</style>
+</head>
+<body>
+<div class="game">
+<h1>第七号盒子</h1>
+<div class="room">
+<div id="scene" class="scene">2036年。<br><br>机械师林默失踪。<br><br>你进入他的工作室，发现一个神秘金属盒。</div>
+<div id="device">📦</div>
+<div class="object" onclick="inspect('book')">📖 旧书</div>
+<div class="object" onclick="inspect('clock')">🕰 时钟</div>
+<div class="object" onclick="inspect('box')">🔒 金属盒</div>
+<div class="bag">背包：<span id="bag">空</span></div>
+</div>
+</div>
+<script>
+let bag=[];
+function add(x){if(!bag.includes(x))bag.push(x);document.getElementById("bag").innerHTML=bag.join("、")}
+function inspect(t){
+let s=document.getElementById("scene");
+if(t=="book"){s.innerHTML="旧书第一页：<br><br>3 1 4 1 5<br><br>获得密码线索。";add("密码31415")}
+if(t=="clock"){s.innerHTML="时钟停在10:09。<br><br>发现机械齿轮。";add("齿轮")}
+if(t=="box"){
+if(!bag.includes("密码31415")){s.innerHTML="盒子锁住了，需要密码。";return}
+s.innerHTML='密码锁：<br><input id="code" placeholder="输入31415"><button onclick="unlock()">确认</button>'
+}}
+function unlock(){
+if(document.getElementById("code").value=="31415"){
+document.getElementById("device").className="spin";
+document.getElementById("scene").innerHTML="🔓机关打开！<br><br>点击盒子启动机械核心。";
+document.getElementById("device").onclick=finish;
+}else alert("密码错误")
+}
+function finish(){
+document.getElementById("device").innerHTML="⚙️";
+document.getElementById("device").className="spin";
+document.getElementById("scene").innerHTML="隐藏抽屉打开。<br><br>发现编号：LINMO_0726<br><br>第一章结束。";
+add("LINMO_0726")
+}
+</script>
+</body>
+</html>
